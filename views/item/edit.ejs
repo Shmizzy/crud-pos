@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title><%= item.name %></title>
+</head>
+<body>
+    <div id="item-container">
+        <h1>Edit <%= item.name %></h1>
+        <div class="card">
+            <form action="/item/<%= item._id %>/edit?_method=PUT" method="POST">
+                <label for="name">Item name: </label>
+                <input type="text" name="name" value="<%= item.name %>" />
+                <label for="price">Price: </label>
+                <input type="number" name="price" value="<%= item.price %>" step=".01" />
+                <button type="submit" class="edit-btn">Edit Item</button>
+            </form>
+            <form action="/item/<%= item._id %>/edit?_method=DELETE" method="POST">
+                <button type="submit" class="remove-btn">Remove <%= item.name %></button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

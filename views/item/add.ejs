@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Add Item</title>
+</head>
+<body>
+    <div id="new-item-container">
+        <h1>Add New Item</h1>
+        <div class="card">
+            <form action="/item/add" method="POST">
+                <label for="name">Item name: </label>
+                <input type="text" name="name" placeholder="pizza" required/>
+                <label for="price">Price: </label>
+                <input type="number" name="price" placeholder="0.00" step=".01" required/>
+                <button type="submit" class="add-btn">Add Item</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
