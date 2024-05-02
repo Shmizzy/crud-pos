@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script defer src="/js/script.js"></script>
 </head>
 <body>
     <div id="home-container">
-        <div id="item-grid">         
-            <% menu.forEach(item => { %>
-                <div class="item"><a href="/item/<%= item._id %>/edit"><h1><%= item.name %></h1></a></div>
-            <% }) %>
+        <div id="item-grid">                 
             <div class="item"><a href="/item/add"><h1>+</h1></a></div>
+        </div>
+        <div id="order-preview">
+            <form action="/order/add" method="POST">
+                <label for="name">Name: </label>
+                <input type="text" name="name"/>
+                <div id="order-list">
+                </div>
+                <button type="submit">Submit Order</button>
+            </form>
         </div>
     </div>
 </body>

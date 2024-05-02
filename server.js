@@ -26,14 +26,23 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }))
+app.use(express.json());
 
+
+
+app.get('/menu', async (req, res) => {
+    let order = [];
+    const menu = await Item.find({});
+
+    res.status(200).json({ order,menu });
+})
+
+app.post('/menu', (req, res) => {
+    res.status(200).json({ menu });
+})
 
 app.get('/', async(req, res) => {
-    const menuItems = await Item.find({});
-    
-    res.render('index.ejs', {
-        menu: menuItems,
-    });
+    res.render('index.ejs');
 })
 
 app.listen('3000', () => {
