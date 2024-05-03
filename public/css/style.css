@@ -20,12 +20,14 @@ a{
 #item-grid{
     flex: 3;
     display: grid;
+    padding: 15px;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 200px;
+    grid-auto-rows: 200px;
 }
 #order-preview{
     flex: 2;
     height: 100dvh;
+    padding: 20px;
 }
 .add-btn, .remove-btn, .edit-btn{
     margin-top: 10px;

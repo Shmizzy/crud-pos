@@ -13,13 +13,11 @@
             <div class="item"><a href="/item/add"><h1>+</h1></a></div>
         </div>
         <div id="order-preview">
-            <form action="/order/add" method="POST">
                 <label for="name">Name: </label>
-                <input type="text" name="name"/>
+                <input type="text" name="name" id="order-name"/>
                 <div id="order-list">
                 </div>
-                <button type="submit">Submit Order</button>
-            </form>
+                <button id="submit-btn">Submit Order</button> 
         </div>
     </div>
 </body>

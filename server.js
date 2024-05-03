@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const session = require('express-session');
 const itemController = require('./controllers/item.js');
 const Item = require('./models/item.js');
+const Order = require('./models/order.js');
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -31,14 +32,23 @@ app.use(express.json());
 
 
 app.get('/menu', async (req, res) => {
-    let order = [];
     const menu = await Item.find({});
 
-    res.status(200).json({ order,menu });
+    res.status(200).json({ menu });
 })
 
-app.post('/menu', (req, res) => {
-    res.status(200).json({ menu });
+app.post('/order' ,  async (req, res) => {
+    
+     const order = await Order.create({
+        name: req.body.name,
+        order: req.body.order
+    }) 
+    
+    res.json({
+        name: req.body.name,
+        order: req.body.order,
+        success: true,
+    });
 })
 
 app.get('/', async(req, res) => {

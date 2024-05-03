@@ -1,5 +1,5 @@
 
-
+const formElement = document.querySelector('#order-form');
 const itemGrid = document.querySelector('#item-grid');
 const orderList = document.querySelector('#order-list');
 
@@ -22,6 +22,34 @@ const loadItems = async () => {
 };
 
 loadItems();
+
+const btnElement = document.querySelector('#submit-btn');
+
+
+btnElement.addEventListener('click', async () => {
+    const nameEl = document.querySelector('#order-name');
+    const nameData = nameEl.value;
+    const finalOrder = {
+        name: nameData,
+        order,
+    }
+
+    const response = await fetch('http://localhost:3000/order',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(finalOrder)
+        });
+    
+    const data = await response.json();
+    console.log(data);
+
+    nameEl.value = '';
+    order = {};
+    orderList.innerHTML = '';
+});
+
 
 const handleClick = (name, price) => {
     if(order[name]) {
@@ -72,8 +100,4 @@ const addToOrderList = (name, price) => {
     orderItem.appendChild(itemName);
     orderItem.appendChild(itemPrice)
     orderList.appendChild(orderItem);
-    console.log(order[name]);
 }
-
-
-

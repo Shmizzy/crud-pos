@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const Item = require('./models/item.js');
-
 
 
 const orderSchema = new mongoose.Schema({
@@ -8,15 +6,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    total: {
-        type: Number,
-        required: true,
+    order: {
+        type: Object,
+        require: true,
     },
-    payedStatus: {
-        type: Boolean,
-        required: true,
-    },
-    order: [ ]
 });
 
 
