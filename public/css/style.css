@@ -5,30 +5,81 @@ a{
     text-decoration: none;
     color: black;
 }
+
+
 #home-container{
-    display: flex;
+    display: grid;
+    height: 98dvh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 5fr 4fr;
     margin: 10px;
 }
-#new-item-container, #item-container{
+#display{
+    grid-column: span 2;
     display: flex;
-    height: 100dvh;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    margin: 10px;
 }
 #item-grid{
-    flex: 3;
     display: grid;
     padding: 15px;
     grid-template-columns: repeat(5, 1fr);
     grid-auto-rows: 200px;
 }
-#order-preview{
-    flex: 2;
-    height: 100dvh;
-    padding: 20px;
+#display-list{
+    border: 2px solid black;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
 }
+#order-preview{
+    padding: 15px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+#order-list{
+    width: 100%;
+    height: 300px;
+    border: 2px solid black;
+    overflow: scroll;
+}
+.order-item{
+    margin: 0 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.order-card{
+    font-size: 12px;
+    margin: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid gray;
+}
+.order-card:hover{
+    background-color: lightcoral;
+}
+.item{
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#new-item-container, #item-container{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    
+}
+
 .add-btn, .remove-btn, .edit-btn{
     margin-top: 10px;
     background-color: lightgray;
@@ -49,20 +100,14 @@ a{
     cursor: pointer;
     background-color: lightcoral;
 }
-.item{
-    margin: 10px;
-    border: 2px solid black;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 .card{
     height: 400px;
     width: 300px;
     border-radius: 8px;
     border: 1px solid black;
 }
+
 form{
     font-weight: 600;
     display: flex;
@@ -70,15 +115,4 @@ form{
     flex-direction: column;
     align-items: center;
     gap: 5px;
-}
-#order-list{
-    width: 100%;
-    height: 400px;
-    border: 2px solid black;
-    overflow: scroll;
-}
-.order-item{
-    margin: 0 20px;
-    display: flex;
-    justify-content: space-between;
 }

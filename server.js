@@ -36,19 +36,32 @@ app.get('/menu', async (req, res) => {
 
     res.status(200).json({ menu });
 })
+app.get('/orders', async (req, res) => {
+    const orders = await Order.find({});
 
-app.post('/order' ,  async (req, res) => {
+    res.status(200).json({ orders });
+})
+
+app.post('/orders' ,  async (req, res) => {
     
      const order = await Order.create({
         name: req.body.name,
         order: req.body.order
     }) 
-    
+    const id = order._id;
+
     res.json({
         name: req.body.name,
         order: req.body.order,
+        id,
         success: true,
     });
+})
+app.delete('/orders/:id' ,  async (req, res) => {
+    const deletedOrder = await Order.findByIdAndDelete(req.params.id);
+
+
+    console.log('Successfully deleted', deletedOrder);
 })
 
 app.get('/', async(req, res) => {

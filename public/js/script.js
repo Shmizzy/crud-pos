@@ -1,7 +1,6 @@
-
-const formElement = document.querySelector('#order-form');
 const itemGrid = document.querySelector('#item-grid');
 const orderList = document.querySelector('#order-list');
+const displayList = document.querySelector('#display-list');
 
 let order = {};
 
@@ -20,11 +19,20 @@ const loadItems = async () => {
         itemElement.addEventListener('click', () => handleClick(element.name, element.price))
     });
 };
+const loadOrders = async() => {
+    const response = await fetch('http://localhost:3000/orders');
+    const data = await response.json();
 
+    data.orders.forEach(element => {
+        createElement(element.name, element.order, element._id);
+    });
+}
 loadItems();
+loadOrders();
+
+
 
 const btnElement = document.querySelector('#submit-btn');
-
 
 btnElement.addEventListener('click', async () => {
     const nameEl = document.querySelector('#order-name');
@@ -34,7 +42,7 @@ btnElement.addEventListener('click', async () => {
         order,
     }
 
-    const response = await fetch('http://localhost:3000/order',{
+    const response = await fetch('http://localhost:3000/orders',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,11 +51,13 @@ btnElement.addEventListener('click', async () => {
         });
     
     const data = await response.json();
+    createElement(nameData, order, data.id);
     console.log(data);
 
     nameEl.value = '';
     order = {};
     orderList.innerHTML = '';
+    
 });
 
 
@@ -100,4 +110,35 @@ const addToOrderList = (name, price) => {
     orderItem.appendChild(itemName);
     orderItem.appendChild(itemPrice)
     orderList.appendChild(orderItem);
+}
+const createElement = (name, order, id) => {
+    
+    let displayOrderInString = '';
+
+    for(let items in order){
+        displayOrderInString += `${items}->${order[items]}x  `;
+    }
+
+    const orderElement = document.createElement('div');
+    const namefromOrder = document.createElement('h1');
+    const orderContent = document.createElement('h1');
+    orderElement.classList.add('order-card')
+    namefromOrder.innerHTML = name;
+    orderContent.innerHTML = displayOrderInString;
+    orderElement.appendChild(namefromOrder);
+    orderElement.appendChild(orderContent);
+    displayList.appendChild(orderElement);
+
+    orderElement.addEventListener('click' , async () => {
+        displayList.removeChild(orderElement);
+        const response = await fetch('http://localhost:3000/orders/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const data = await response.json();
+        await loadOrders();
+        console.log(data);
+    });
 }
