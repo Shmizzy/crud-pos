@@ -12,8 +12,10 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    addons: [String],
-    img: String,
+    type: {
+        type: String,
+        require: true,
+    }
 })
 
 module.exports = mongoose.model('Item', itemSchema);

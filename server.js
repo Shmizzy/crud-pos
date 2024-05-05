@@ -31,11 +31,21 @@ app.use(express.json());
 
 
 
-app.get('/menu', async (req, res) => {
-    const menu = await Item.find({});
-
+app.get('/menu/entrees', async (req, res) => {
+    const menu = await Item.find({type: 'entree'});
     res.status(200).json({ menu });
 })
+app.get('/menu/sides', async (req, res) => {
+    const menu = await Item.find({type: 'side'});
+    res.status(200).json({ menu });
+})
+app.get('/menu/ingredients', async (req, res) => {
+    const menu = await Item.find({type: 'ingredient'});
+    res.status(200).json({ menu });
+})
+
+
+
 app.get('/orders', async (req, res) => {
     const orders = await Order.find({});
 
@@ -59,8 +69,6 @@ app.post('/orders' ,  async (req, res) => {
 })
 app.delete('/orders/:id' ,  async (req, res) => {
     const deletedOrder = await Order.findByIdAndDelete(req.params.id);
-
-
     console.log('Successfully deleted', deletedOrder);
 })
 

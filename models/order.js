@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
     order: {
         type: Object,
         require: true,
-    },
+    }
 });
 
 

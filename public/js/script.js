@@ -4,37 +4,39 @@ const displayList = document.querySelector('#display-list');
 
 let order = {};
 
-const loadItems = async () => {
-    const response = await fetch('http://localhost:3000/menu');
+const loadItems = async (type) => {
+    const response = await fetch('http://localhost:3000/menu/' + type);
     const data = await response.json();
-
+    itemGrid.innerHTML = '';
     data.menu.forEach(element => {
-        const itemElement = document.createElement('div');
-        itemElement.classList.add('item')
-        const h1 = document.createElement('h1');
-        h1.innerHTML = element.name
-        itemElement.appendChild(h1);
-        itemGrid.appendChild(itemElement);
-
-        itemElement.addEventListener('click', () => handleClick(element.name, element.price))
+        createMenuItem(element.name, element.price);
     });
+    addItemEl();
 };
+
 const loadOrders = async() => {
     const response = await fetch('http://localhost:3000/orders');
     const data = await response.json();
 
     data.orders.forEach(element => {
-        createElement(element.name, element.order, element._id);
+        createOrder(element.name, element.order, element._id);
     });
 }
-loadItems();
+loadItems('entrees');
 loadOrders();
 
+const entreeButton = document.querySelector('#entrees');
+const sideButton = document.querySelector('#sides');
+const ingredientButton = document.querySelector('#ingredients');
+
+entreeButton.addEventListener('click', () => loadItems('entrees'));
+sideButton.addEventListener('click', () => loadItems('sides'));
+ingredientButton.addEventListener('click', () => loadItems('ingredients'));
 
 
-const btnElement = document.querySelector('#submit-btn');
+const submitOrderEl = document.querySelector('#submit-btn');
 
-btnElement.addEventListener('click', async () => {
+submitOrderEl.addEventListener('click', async () => {
     const nameEl = document.querySelector('#order-name');
     const nameData = nameEl.value;
     const finalOrder = {
@@ -51,7 +53,7 @@ btnElement.addEventListener('click', async () => {
         });
     
     const data = await response.json();
-    createElement(nameData, order, data.id);
+    createOrder(nameData, order, data.id);
     console.log(data);
 
     nameEl.value = '';
@@ -111,7 +113,11 @@ const addToOrderList = (name, price) => {
     orderItem.appendChild(itemPrice)
     orderList.appendChild(orderItem);
 }
-const createElement = (name, order, id) => {
+
+
+
+
+const createOrder = (name, order, id) => {
     
     let displayOrderInString = '';
 
@@ -141,4 +147,20 @@ const createElement = (name, order, id) => {
         await loadOrders();
         console.log(data);
     });
+}
+const createMenuItem = (name, price)=> {
+    const itemElement = document.createElement('div');
+        itemElement.classList.add('item')
+        const h1 = document.createElement('h1');
+        h1.innerHTML = name;
+        itemElement.appendChild(h1);
+        itemGrid.appendChild(itemElement);
+        itemElement.addEventListener('click', () => handleClick(name, price))
+}
+const addItemEl = ()=> {
+    const itemElement = document.createElement('a');
+        itemElement.classList.add('item')
+        itemElement.innerHTML = '+';
+        itemElement.href = '/item/add';
+        itemGrid.appendChild(itemElement);
 }
