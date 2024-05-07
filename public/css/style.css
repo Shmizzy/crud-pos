@@ -16,6 +16,12 @@ a{
     grid-template-rows: 5fr 3fr;
     margin: 10px;
 }
+#order-preview{
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 #display{
     grid-column: span 2;
     display: flex;
@@ -63,12 +69,7 @@ a{
     flex-direction: column;
     width: 80%;
 }
-#order-preview{
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+
 #order-list{
     width: 100%;
     height: 350px;
@@ -86,7 +87,14 @@ a{
     border-radius: 6px;
     background-color: rgba(255, 255, 255, 0.04);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+}
+.remove-item{
+    color: red;
+    margin-right: 150px;
+}
+.remove-item:hover{
+    cursor: pointer;
 }
 .order-item, h2{
     font-weight: 500;

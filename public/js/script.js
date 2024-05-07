@@ -2,7 +2,7 @@ const itemGrid = document.querySelector('#item-grid');
 const orderList = document.querySelector('#order-list');
 const displayList = document.querySelector('#display-list');
 
-let order = {};
+let order = new Map();
 
 const loadItems = async (type) => {
     const response = await fetch('http://localhost:3000/menu/' + type);
@@ -89,25 +89,58 @@ const findElementandIncrement = (name,price) => {
     foundPrice.innerHTML = currentPrice.toFixed(2);
 
 }
+const findElementandDecrement = (name,price) => {    
+
+    const foundPrice = document.querySelector(`.item-price[data-name="${name}"]`);
+    const foundQty = document.querySelector(`.item-qty[data-name="${name}"]`);
+    
+    let currentQty = parseInt(foundQty.innerHTML);
+    let currentPrice = parseInt(foundPrice.innerHTML);
+    
+
+        currentQty--;
+        currentPrice = price * currentQty;
+
+        foundQty.innerHTML = currentQty;
+        foundPrice.innerHTML = currentPrice.toFixed(2);
+
+}
 
 const addToOrderList = (name, price) => {    
 
     const orderItem = document.createElement('div');
+    const removeItem = document.createElement('a');
     const itemName = document.createElement('h2');
     const itemQty = document.createElement('h2');
     const itemPrice = document.createElement('h2');
     
+    removeItem.classList.add('remove-item');
     orderItem.classList.add('order-item'); 
     itemQty.classList.add('item-qty');
     itemPrice.classList.add('item-price');
     
+   
     itemQty.dataset.name = name;
+    orderItem.dataset.name = name;
     itemPrice.dataset.name = name;
-
-    itemPrice.innerHTML = price;
+    
     itemQty.innerHTML = '1';
+    removeItem.innerHTML = '-';
+    itemPrice.innerHTML = price;
     itemName.innerHTML = name;
 
+    removeItem.addEventListener('click', () => {
+            if(order[name] === 1 ){
+                delete order[name];
+                const foundItem = document.querySelector(`.order-item[data-name="${name}"]`);
+                orderList.removeChild(foundItem);
+            }else{
+                order[name]--;
+                findElementandDecrement(name, price);
+            }
+    });
+
+    orderItem.appendChild(removeItem);
     orderItem.appendChild(itemQty);
     orderItem.appendChild(itemName);
     orderItem.appendChild(itemPrice)
